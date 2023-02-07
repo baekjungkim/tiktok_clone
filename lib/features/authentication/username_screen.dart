@@ -81,6 +81,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
               Gaps.v16,
               TextField(
                 controller: _usernameController,
+                onEditingComplete: _onNextTap,
                 decoration: InputDecoration(
                   hintText: 'Username',
                   enabledBorder: UnderlineInputBorder(
