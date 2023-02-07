@@ -116,15 +116,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       Gaps.h14,
                       GestureDetector(
                         onTap: _toggleObscureText,
-                        child: SizedBox(
-                          width: Sizes.size24,
-                          child: FaIcon(
-                            _obscureText
-                                ? FontAwesomeIcons.eye
-                                : FontAwesomeIcons.eyeSlash,
-                            color: Colors.grey.shade500,
-                            size: Sizes.size20,
-                          ),
+                        child: FaIcon(
+                          _obscureText
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
+                          color: Colors.grey.shade500,
+                          size: _obscureText
+                              ? Sizes.size20
+                              : Sizes.size16 + Sizes.size2,
                         ),
                       ),
                     ],
