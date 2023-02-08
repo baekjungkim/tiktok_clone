@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 class LoginFormScreen extends StatefulWidget {
   const LoginFormScreen({super.key});
@@ -19,6 +20,11 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState == null) return;
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const InterestsScreen(),
+      ),
+    );
   }
 
   void _onScaffoldTap() {
@@ -46,6 +52,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   keyboardType: TextInputType.emailAddress,
                   onEditingComplete: _onSubmitTap,
                   autocorrect: false,
+                  // autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     hintText: 'Email',
                     enabledBorder: UnderlineInputBorder(
@@ -63,7 +70,8 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                     if (value == null) return "Email not valid";
                     final regExp = RegExp(
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                    return regExp.hasMatch(value) ? null : "Email not valid";
+                    if (!regExp.hasMatch(value)) return "Email not valid";
+                    return null;
                   },
                   onSaved: (newValue) {
                     if (newValue == null) return;
@@ -76,6 +84,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   onEditingComplete: _onSubmitTap,
                   autocorrect: false,
                   obscureText: true,
+                  // autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     hintText: 'Password',
                     enabledBorder: UnderlineInputBorder(
@@ -91,13 +100,17 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   ),
                   validator: (value) {
                     if (value == null) return 'Password not valid';
-                    if (value.contains(RegExp(r"[a-z]"))) return null;
-                    // if (value.contains(RegExp(r"[A-Z]"))) return null;
-                    if (value.contains(RegExp(r"[0-9]"))) return null;
-                    if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-                      return null;
+                    if (!value.contains(RegExp(r"[a-z]"))) {
+                      return 'Password not valid';
                     }
-                    return 'Password not valid';
+                    // if (value.contains(RegExp(r"[A-Z]"))) return null;
+                    if (!value.contains(RegExp(r"[0-9]"))) {
+                      return 'Password not valid';
+                    }
+                    if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+                      return 'Password not valid';
+                    }
+                    return null;
                   },
                   onSaved: (newValue) {
                     if (newValue == null) return;
