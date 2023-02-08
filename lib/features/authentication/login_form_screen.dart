@@ -43,31 +43,67 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
               children: [
                 Gaps.v28,
                 TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Email',
-                  ),
+                  keyboardType: TextInputType.emailAddress,
                   onEditingComplete: _onSubmitTap,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                  ),
                   validator: (value) {
-                    return null;
+                    if (value == null) return "Email not valid";
+                    final regExp = RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                    return regExp.hasMatch(value) ? null : "Email not valid";
                   },
                   onSaved: (newValue) {
                     if (newValue == null) return;
                     formData['email'] = newValue;
                   },
+                  cursorColor: Theme.of(context).primaryColor,
                 ),
                 Gaps.v16,
                 TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Password',
-                  ),
                   onEditingComplete: _onSubmitTap,
+                  autocorrect: false,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                  ),
                   validator: (value) {
-                    return null;
+                    if (value == null) return 'Password not valid';
+                    if (value.contains(RegExp(r"[a-z]"))) return null;
+                    // if (value.contains(RegExp(r"[A-Z]"))) return null;
+                    if (value.contains(RegExp(r"[0-9]"))) return null;
+                    if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+                      return null;
+                    }
+                    return 'Password not valid';
                   },
                   onSaved: (newValue) {
                     if (newValue == null) return;
                     formData['password'] = newValue;
                   },
+                  cursorColor: Theme.of(context).primaryColor,
                 ),
                 Gaps.v28,
                 GestureDetector(

@@ -35,10 +35,8 @@ class _EmailScreenState extends State<EmailScreen> {
     if (_email.isEmpty) return null;
     final regExp = RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (!regExp.hasMatch(_email)) {
-      return "Email not valid";
-    }
-    return null;
+    if (regExp.hasMatch(_email)) return null;
+    return "Email not valid";
   }
 
   void _onScaffoldTap() {
