@@ -16,13 +16,12 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
 
   Map<String, String> formData = {};
 
-  bool _isValid = false;
-
   void _onSubmitTap() {
     if (_formKey.currentState == null) return;
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
-    Navigator.of(context).push(
+    Navigator.push(
+      context,
       MaterialPageRoute(
         builder: (context) => const InterestsScreen(),
       ),
@@ -47,11 +46,6 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
           ),
           child: Form(
             key: _formKey,
-            onChanged: () {
-              setState(() {
-                _isValid = _formKey.currentState!.validate();
-              });
-            },
             child: Column(
               children: [
                 Gaps.v28,
@@ -126,8 +120,8 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                 Gaps.v28,
                 GestureDetector(
                   onTap: _onSubmitTap,
-                  child: FormButton(
-                    disabled: !_isValid,
+                  child: const FormButton(
+                    disabled: false,
                     text: 'Log in',
                   ),
                 ),

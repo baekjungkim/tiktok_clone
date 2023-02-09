@@ -30,12 +30,12 @@ class FormButton extends StatelessWidget {
               disabled ? Colors.grey.shade200 : Theme.of(context).primaryColor,
         ),
         child: AnimatedDefaultTextStyle(
+          duration: const Duration(
+            milliseconds: 500,
+          ),
           style: TextStyle(
             color: disabled ? Colors.grey.shade400 : Colors.white,
             fontWeight: FontWeight.w600,
-          ),
-          duration: const Duration(
-            milliseconds: 500,
           ),
           child: Text(
             text,
