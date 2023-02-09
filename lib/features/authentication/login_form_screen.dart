@@ -20,11 +20,11 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState == null) return;
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
-    Navigator.push(
-      context,
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => const InterestsScreen(),
       ),
+      (route) => false,
     );
   }
 
@@ -67,10 +67,13 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                     ),
                   ),
                   validator: (value) {
-                    if (value == null) return "Email not valid";
-                    final regExp = RegExp(
-                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                    if (!regExp.hasMatch(value)) return "Email not valid";
+                    if (value == null || value.isEmpty) {
+                      return "Email not valid";
+                    }
+                    // if (value == null) return "Email not valid";
+                    // final regExp = RegExp(
+                    //     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                    // if (!regExp.hasMatch(value)) return "Email not valid";
                     return null;
                   },
                   onSaved: (newValue) {
@@ -98,17 +101,19 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                     ),
                   ),
                   validator: (value) {
-                    if (value == null) return 'Password not valid';
-                    if (!value.contains(RegExp(r"[a-z]"))) {
+                    if (value == null || value.isEmpty) {
                       return 'Password not valid';
                     }
-                    // if (value.contains(RegExp(r"[A-Z]"))) return null;
-                    if (!value.contains(RegExp(r"[0-9]"))) {
-                      return 'Password not valid';
-                    }
-                    if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-                      return 'Password not valid';
-                    }
+                    // if (!value.contains(RegExp(r"[a-z]"))) {
+                    //   return 'Password not valid';
+                    // }
+                    // // if (value.contains(RegExp(r"[A-Z]"))) return null;
+                    // if (!value.contains(RegExp(r"[0-9]"))) {
+                    //   return 'Password not valid';
+                    // }
+                    // if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+                    //   return 'Password not valid';
+                    // }
                     return null;
                   },
                   onSaved: (newValue) {
