@@ -16,6 +16,8 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
 
   Map<String, String> formData = {};
 
+  bool _isValid = false;
+
   void _onSubmitTap() {
     if (_formKey.currentState == null) return;
     if (!_formKey.currentState!.validate()) return;
@@ -45,6 +47,11 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
           ),
           child: Form(
             key: _formKey,
+            onChanged: () {
+              setState(() {
+                _isValid = _formKey.currentState!.validate();
+              });
+            },
             child: Column(
               children: [
                 Gaps.v28,
@@ -52,7 +59,6 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   keyboardType: TextInputType.emailAddress,
                   onEditingComplete: _onSubmitTap,
                   autocorrect: false,
-                  // autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     hintText: 'Email',
                     enabledBorder: UnderlineInputBorder(
@@ -84,7 +90,6 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   onEditingComplete: _onSubmitTap,
                   autocorrect: false,
                   obscureText: true,
-                  // autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     hintText: 'Password',
                     enabledBorder: UnderlineInputBorder(
@@ -121,8 +126,8 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                 Gaps.v28,
                 GestureDetector(
                   onTap: _onSubmitTap,
-                  child: const FormButton(
-                    disabled: false,
+                  child: FormButton(
+                    disabled: !_isValid,
                     text: 'Log in',
                   ),
                 ),
