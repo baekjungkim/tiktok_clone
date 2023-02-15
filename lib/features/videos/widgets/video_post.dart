@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_action_button.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_bgm_info.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_tag_info.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -28,6 +32,15 @@ class _VideoPostState extends State<VideoPost>
   final Duration _animationDuration = const Duration(milliseconds: 200);
   bool _isPaused = false;
 
+  final List<String> tags = [
+    "googleearth",
+    "googlemaps",
+    "thailand!!!!",
+    "house",
+  ];
+
+  final String bgmInfo = 'Eminem - Lose Yourself';
+
   void _onVideoChange() {
     if (!_videoPlayerController.value.isInitialized) return;
     if (_videoPlayerController.value.duration ==
@@ -38,6 +51,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
+    await _videoPlayerController.setLooping(true);
     setState(() {
       _videoPlayerController.addListener(_onVideoChange);
     });
@@ -123,6 +137,73 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 10,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width - 100,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "@zvgandam",
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Gaps.v10,
+                  const Text(
+                    'This is my house in Thailand!!!',
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Gaps.v10,
+                  VideoTagInfo(desc: tags.map((tag) => '#$tag').join(', ')),
+                  Gaps.v10,
+                  SizedBox(
+                    height: 30,
+                    width: MediaQuery.of(context).size.width - 100,
+                    child: VideoBgmInfo(bgmInfo: bgmInfo),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            right: 10,
+            child: Column(
+              children: const [
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  foregroundImage: NetworkImage(
+                      'https://avatars.githubusercontent.com/u/44705388?v=4'),
+                  child: Text('vgan'),
+                ),
+                Gaps.v24,
+                VideoActionButton(
+                  icon: FontAwesomeIcons.solidHeart,
+                  text: '2.9M',
+                ),
+                Gaps.v24,
+                VideoActionButton(
+                  icon: FontAwesomeIcons.solidComment,
+                  text: '33K',
+                ),
+                Gaps.v24,
+                VideoActionButton(
+                  icon: FontAwesomeIcons.share,
+                  text: 'Share',
+                ),
+              ],
             ),
           ),
         ],
