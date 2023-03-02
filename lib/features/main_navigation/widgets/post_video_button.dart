@@ -5,10 +5,10 @@ import 'package:tiktok_clone/constants/sizes.dart';
 class PostVideoButton extends StatelessWidget {
   const PostVideoButton({
     super.key,
-    required this.isHover,
+    required this.inverted,
   });
 
-  final bool isHover;
+  final bool inverted;
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,8 @@ class PostVideoButton extends StatelessWidget {
       children: [
         Positioned(
           right: 20,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            height: isHover ? Sizes.size40 : Sizes.size32,
+          child: Container(
+            height: Sizes.size32,
             width: Sizes.size24,
             padding: const EdgeInsets.symmetric(
               horizontal: Sizes.size8,
@@ -34,9 +33,8 @@ class PostVideoButton extends StatelessWidget {
         ),
         Positioned(
           left: 20,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            height: isHover ? Sizes.size40 : Sizes.size32,
+          child: Container(
+            height: Sizes.size32,
             width: Sizes.size24,
             padding: const EdgeInsets.symmetric(
               horizontal: Sizes.size8,
@@ -49,22 +47,21 @@ class PostVideoButton extends StatelessWidget {
             ),
           ),
         ),
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          height: isHover ? Sizes.size40 : Sizes.size32,
+        Container(
+          height: Sizes.size32,
           padding: const EdgeInsets.symmetric(
             horizontal: Sizes.size12,
           ),
           decoration: BoxDecoration(
-            color: isHover ? Colors.deepOrangeAccent : Colors.white,
+            color: inverted ? Colors.black : Colors.white,
             borderRadius: BorderRadius.circular(
               Sizes.size6,
             ),
           ),
-          child: const Center(
+          child: Center(
             child: FaIcon(
               FontAwesomeIcons.plus,
-              color: Colors.black,
+              color: inverted ? Colors.white : Colors.black,
               size: 18,
             ),
           ),
