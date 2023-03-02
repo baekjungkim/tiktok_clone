@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -21,17 +20,34 @@ class DiscoverScreen extends StatefulWidget {
   State<DiscoverScreen> createState() => _DiscoverScreenState();
 }
 
-class _DiscoverScreenState extends State<DiscoverScreen> {
-  final TextEditingController _textEditingController = TextEditingController(
-    text: 'initial text',
-  );
+class _DiscoverScreenState extends State<DiscoverScreen>
+    with SingleTickerProviderStateMixin {
+  final TextEditingController _textEditingController = TextEditingController();
 
-  void _onSearchChanged(String value) {
-    print('search $value');
+  String _keyword = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController.addListener(() {
+      setState(() {
+        _keyword = _textEditingController.text;
+      });
+    });
   }
 
-  void _onSearchSubmitted(String value) {
-    print('submitted $value');
+  void _onSubmitted() {
+    if (_keyword != "") {
+      print(_keyword); // 검색어 전달자 사전작업
+    }
+  }
+
+  void _onClearTap() {
+    _textEditingController.clear();
+  }
+
+  void _onSearchStop() {
+    FocusScope.of(context).unfocus();
   }
 
   @override
@@ -48,33 +64,88 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: CupertinoSearchTextField(
+          title: TextField(
             controller: _textEditingController,
-            onChanged: _onSearchChanged,
-            onSubmitted: _onSearchSubmitted,
+            textInputAction: TextInputAction.search,
+            decoration: InputDecoration(
+              hintText: "Input Keyword...",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  Sizes.size8,
+                ),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Colors.grey.shade200,
+              contentPadding: EdgeInsets.zero,
+              icon: GestureDetector(
+                onTap: _onSearchStop,
+                child: const FaIcon(
+                  FontAwesomeIcons.chevronLeft,
+                  color: Colors.black,
+                  size: Sizes.size20,
+                ),
+              ),
+              prefixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: Sizes.size16,
+                    ),
+                    child: FaIcon(
+                      FontAwesomeIcons.magnifyingGlass,
+                      color: Colors.grey.shade600,
+                      size: Sizes.size20,
+                    ),
+                  ),
+                ],
+              ),
+              suffixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (_keyword.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: Sizes.size10,
+                      ),
+                      child: GestureDetector(
+                        onTap: _onClearTap,
+                        child: FaIcon(
+                          FontAwesomeIcons.solidCircleXmark,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
           bottom: TabBar(
-              onTap: (value) {
-                FocusScope.of(context).unfocus();
-              },
-              padding: const EdgeInsets.symmetric(
-                horizontal: Sizes.size6,
-              ),
-              splashFactory: NoSplash.splashFactory,
-              isScrollable: true,
-              unselectedLabelColor: Colors.grey.shade500,
-              indicatorColor: Colors.black,
-              labelColor: Colors.black,
-              labelStyle: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: Sizes.size16,
-              ),
-              tabs: [
-                for (var tab in tabs)
-                  Tab(
-                    text: tab,
-                  ),
-              ]),
+            onTap: (value) {
+              FocusScope.of(context).unfocus();
+            },
+            padding: const EdgeInsets.symmetric(
+              horizontal: Sizes.size6,
+            ),
+            splashFactory: NoSplash.splashFactory,
+            isScrollable: true,
+            unselectedLabelColor: Colors.grey.shade500,
+            indicatorColor: Colors.black,
+            labelColor: Colors.black,
+            labelStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: Sizes.size16,
+            ),
+            tabs: [
+              for (var tab in tabs)
+                Tab(
+                  text: tab,
+                ),
+            ],
+          ),
         ),
         body: TabBarView(
           children: [
