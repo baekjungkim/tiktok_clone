@@ -38,7 +38,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
 
   void _onSubmitted() {
     if (_keyword != "") {
-      print(_keyword); // 검색어 전달자 사전작업
+      print(_keyword);
     }
   }
 
@@ -66,6 +66,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
           elevation: 1,
           title: TextField(
             controller: _textEditingController,
+            onEditingComplete: _onSubmitted,
             textInputAction: TextInputAction.search,
             decoration: InputDecoration(
               hintText: "Input Keyword...",
