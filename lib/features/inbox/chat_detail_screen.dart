@@ -25,19 +25,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
     });
   }
 
-  // void _onTextChanged(String value) {
-  //   if (value != '') {
-  //     isWriting = false;
-  //   } else {
-  //     isWriting = true;
-  //   }
-  //   setState(() {});
-  // }
   void _stopChats() {
     FocusScope.of(context).unfocus();
-    // setState(() {
-    //   isWriting = false;
-    // });
   }
 
   @override
