@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -32,6 +33,7 @@ class _VideoPostState extends State<VideoPost>
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
   bool _isPaused = false;
+  bool _isMuted = true;
 
   final List<String> tags = [
     "googleearth",
@@ -53,6 +55,9 @@ class _VideoPostState extends State<VideoPost>
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+    }
     setState(() {
       _videoPlayerController.addListener(_onVideoChange);
     });
@@ -114,6 +119,17 @@ class _VideoPostState extends State<VideoPost>
       builder: (context) => const VideoComments(),
     );
     _onTogglePause();
+  }
+
+  void _onVolumnToggle() {
+    if (_videoPlayerController.value.volume == 0) {
+      _videoPlayerController.setVolume(1);
+    } else {
+      _videoPlayerController.setVolume(0);
+    }
+    setState(() {
+      _isMuted = !_isMuted;
+    });
   }
 
   @override
@@ -225,6 +241,16 @@ class _VideoPostState extends State<VideoPost>
                 const VideoActionButton(
                   icon: FontAwesomeIcons.share,
                   text: 'Share',
+                ),
+                Gaps.v24,
+                GestureDetector(
+                  onTap: _onVolumnToggle,
+                  child: VideoActionButton(
+                    icon: _isMuted
+                        ? FontAwesomeIcons.volumeXmark
+                        : FontAwesomeIcons.volumeHigh,
+                    text: 'Volume',
+                  ),
                 ),
               ],
             ),
