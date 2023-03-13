@@ -81,7 +81,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           ListTile(
-            title: const Text("Log out (iOS),"),
+            title: const Text("Log out (iOS)"),
             textColor: Colors.red,
             onTap: () {
               showCupertinoDialog(
@@ -105,7 +105,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
           ListTile(
-            title: const Text("Log out (Android),"),
+            title: const Text("Log out (Android)"),
             textColor: Colors.red,
             onTap: () {
               showDialog(
@@ -126,6 +126,56 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     TextButton(
                       child: const Text("Yes"),
                       onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text("Log out (iOS / Bottom)"),
+            textColor: Colors.red,
+            onTap: () {
+              showCupertinoModalPopup(
+                context: context,
+                builder: (context) => CupertinoAlertDialog(
+                  title: const Text("Are you sure?"),
+                  content: const Text("Please dont go"),
+                  actions: [
+                    CupertinoDialogAction(
+                      child: const Text("No"),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    CupertinoDialogAction(
+                      isDestructiveAction: true,
+                      child: const Text("Yes"),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text("Log out (iOS / ActionSheet)"),
+            textColor: Colors.red,
+            onTap: () {
+              showCupertinoModalPopup(
+                context: context,
+                builder: (context) => CupertinoActionSheet(
+                  title: const Text("Are you sure?"),
+                  message:
+                      const Text("Please Doooooooooooooooooont gooooooooo"),
+                  actions: [
+                    CupertinoActionSheetAction(
+                      isDefaultAction: true,
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Not Log out'),
+                    ),
+                    CupertinoActionSheetAction(
+                      isDestructiveAction: true,
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text(' Log out'),
                     ),
                   ],
                 ),
