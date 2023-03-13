@@ -67,63 +67,68 @@ class _DiscoverScreenState extends State<DiscoverScreen>
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: TextField(
-            controller: _textEditingController,
-            onEditingComplete: _onSubmitted,
-            textInputAction: TextInputAction.search,
-            decoration: InputDecoration(
-              hintText: "Input Keyword...",
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  Sizes.size8,
-                ),
-                borderSide: BorderSide.none,
-              ),
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              contentPadding: EdgeInsets.zero,
-              icon: GestureDetector(
-                onTap: _onSearchStop,
-                child: const FaIcon(
-                  FontAwesomeIcons.chevronLeft,
-                  color: Colors.black,
-                  size: Sizes.size20,
-                ),
-              ),
-              prefixIcon: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: Sizes.size16,
-                    ),
-                    child: FaIcon(
-                      FontAwesomeIcons.magnifyingGlass,
-                      color: Colors.grey.shade600,
-                      size: Sizes.size20,
-                    ),
+          title: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.sm,
+            ),
+            child: TextField(
+              controller: _textEditingController,
+              onEditingComplete: _onSubmitted,
+              textInputAction: TextInputAction.search,
+              decoration: InputDecoration(
+                hintText: "Input Keyword...",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    Sizes.size8,
                   ),
-                ],
-              ),
-              suffixIcon: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  if (_keyword.isNotEmpty)
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade200,
+                contentPadding: EdgeInsets.zero,
+                icon: GestureDetector(
+                  onTap: _onSearchStop,
+                  child: const FaIcon(
+                    FontAwesomeIcons.chevronLeft,
+                    color: Colors.black,
+                    size: Sizes.size20,
+                  ),
+                ),
+                prefixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
                     Padding(
                       padding: const EdgeInsets.only(
-                        right: Sizes.size10,
+                        left: Sizes.size16,
                       ),
-                      child: GestureDetector(
-                        onTap: _onClearTap,
-                        child: FaIcon(
-                          FontAwesomeIcons.solidCircleXmark,
-                          color: Colors.grey.shade600,
-                        ),
+                      child: FaIcon(
+                        FontAwesomeIcons.magnifyingGlass,
+                        color: Colors.grey.shade600,
+                        size: Sizes.size20,
                       ),
                     ),
-                ],
+                  ],
+                ),
+                suffixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    if (_keyword.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          right: Sizes.size10,
+                        ),
+                        child: GestureDetector(
+                          onTap: _onClearTap,
+                          child: FaIcon(
+                            FontAwesomeIcons.solidCircleXmark,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -166,69 +171,73 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                 childAspectRatio: 5 / 10.1,
               ),
               itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          Sizes.size4,
+                return LayoutBuilder(
+                  builder: (context, constraints) => Column(
+                    children: [
+                      Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            Sizes.size4,
+                          ),
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: 5 / 8,
+                          child: FadeInImage.assetNetwork(
+                            placeholder: 'assets/images/placeholder.jpg',
+                            image:
+                                'https://images.unsplash.com/photo-1673844969019-c99b0c933e90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                      child: AspectRatio(
-                        aspectRatio: 5 / 8,
-                        child: FadeInImage.assetNetwork(
-                          placeholder: 'assets/images/placeholder.jpg',
-                          image:
-                              'https://images.unsplash.com/photo-1673844969019-c99b0c933e90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-                          fit: BoxFit.cover,
+                      Gaps.v10,
+                      Text(
+                        '${constraints.maxWidth} This is a very long caption for my tiktok taht im uploading just now currently.',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: Sizes.size16,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                    ),
-                    Gaps.v10,
-                    const Text(
-                      'This is a very long caption for my tiktok taht im uploading just now currently.',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: Sizes.size16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Gaps.v5,
-                    DefaultTextStyle(
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      child: Row(
-                        children: [
-                          const CircleAvatar(
-                            radius: Sizes.size12,
-                            child: Text('baek'),
+                      Gaps.v5,
+                      if (constraints.maxWidth < 200 ||
+                          constraints.maxWidth > 250)
+                        DefaultTextStyle(
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontWeight: FontWeight.w500,
                           ),
-                          Gaps.h4,
-                          const Expanded(
-                            child: Text(
-                              'My avatar is going to be very long',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                radius: Sizes.size12,
+                                child: Text('baek'),
+                              ),
+                              Gaps.h4,
+                              const Expanded(
+                                child: Text(
+                                  'My avatar is going to be very long',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Gaps.h4,
+                              FaIcon(
+                                FontAwesomeIcons.heart,
+                                size: Sizes.size16,
+                                color: Colors.grey.shade500,
+                              ),
+                              Gaps.h2,
+                              const Text(
+                                '2.5M',
+                              ),
+                            ],
                           ),
-                          Gaps.h4,
-                          FaIcon(
-                            FontAwesomeIcons.heart,
-                            size: Sizes.size16,
-                            color: Colors.grey.shade500,
-                          ),
-                          Gaps.h2,
-                          const Text(
-                            '2.5M',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                        ),
+                    ],
+                  ),
                 );
               },
             ),
