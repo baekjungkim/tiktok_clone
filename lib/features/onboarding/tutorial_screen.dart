@@ -78,15 +78,24 @@ class _TutorialScreenState extends State<TutorialScreen> {
         bottomNavigationBar: AnimatedOpacity(
           duration: const Duration(milliseconds: 300),
           opacity: _showPage == Page.first ? 0 : 1,
-          child: BottomAppBar(
-            elevation: 0,
+          child: Container(
             color: isDarkMode(context) ? Colors.black : Colors.white,
             child: Padding(
-              padding: const EdgeInsets.all(Sizes.size24),
+              padding: const EdgeInsets.only(
+                top: Sizes.size32,
+                bottom: Sizes.size64,
+                left: Sizes.size24,
+                right: Sizes.size24,
+              ),
               child: CupertinoButton(
                 onPressed: _onEnterAppTap,
                 color: Theme.of(context).primaryColor,
-                child: const Text('Enter the app!'),
+                child: const Text(
+                  'Enter the app!',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ),
