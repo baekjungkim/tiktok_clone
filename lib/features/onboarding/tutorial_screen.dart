@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen_1.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen_2.dart';
+import 'package:tiktok_clone/utils.dart';
 
 enum Direction { right, left }
 
@@ -78,6 +79,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
           duration: const Duration(milliseconds: 300),
           opacity: _showPage == Page.first ? 0 : 1,
           child: BottomAppBar(
+            elevation: 0,
+            color: isDarkMode(context) ? Colors.black : Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(Sizes.size24),
               child: CupertinoButton(

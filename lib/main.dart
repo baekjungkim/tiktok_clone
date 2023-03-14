@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +34,7 @@ class _TiktokAppState extends State<TiktokApp> {
       title: 'Ticktok Clone',
       themeMode: ThemeMode.system,
       theme: ThemeData(
-        textTheme: GoogleFonts.montserratTextTheme(),
+        textTheme: Typography.blackHelsinki,
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
         bottomAppBarTheme: BottomAppBarTheme(
@@ -60,11 +59,12 @@ class _TiktokAppState extends State<TiktokApp> {
         ),
       ),
       darkTheme: ThemeData(
-        textTheme: GoogleFonts.montserratTextTheme(
-          ThemeData(brightness: Brightness.dark).textTheme,
-        ),
+        textTheme: Typography.whiteHelsinki,
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey.shade900,
+        ),
         bottomAppBarTheme: BottomAppBarTheme(
           color: Colors.grey.shade800,
         ),
