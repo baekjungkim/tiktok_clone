@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +57,18 @@ class _TiktokAppState extends State<TiktokApp> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        tabBarTheme: TabBarTheme(
+          unselectedLabelColor: Colors.grey.shade500,
+          labelColor: Colors.black,
+          indicatorColor: Colors.black,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.grey.shade200,
+          iconColor: Colors.grey.shade600,
+          prefixIconColor: Colors.grey.shade600,
+          suffixIconColor: Colors.grey.shade600,
+        ),
       ),
       darkTheme: ThemeData(
         textTheme: Typography.whiteHelsinki,
@@ -68,9 +80,25 @@ class _TiktokAppState extends State<TiktokApp> {
         bottomAppBarTheme: BottomAppBarTheme(
           color: Colors.grey.shade800,
         ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xffe9435a),
+        ),
         primaryColor: const Color(0xffe9435a),
+        tabBarTheme: const TabBarTheme(
+          indicatorColor: Colors.white,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.grey.shade800,
+          hintStyle: const TextStyle(
+            color: Colors.white,
+          ),
+          iconColor: Colors.grey.shade500,
+          prefixIconColor: Colors.grey.shade500,
+          suffixIconColor: Colors.grey.shade500,
+        ),
       ),
-      home: const SignUpScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
