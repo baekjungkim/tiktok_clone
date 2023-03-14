@@ -69,6 +69,9 @@ class _TiktokAppState extends State<TiktokApp> {
           prefixIconColor: Colors.grey.shade600,
           suffixIconColor: Colors.grey.shade600,
         ),
+        listTileTheme: const ListTileThemeData(
+          iconColor: Colors.black,
+        ),
       ),
       darkTheme: ThemeData(
         textTheme: Typography.whiteHelsinki,
