@@ -87,8 +87,9 @@ class _TiktokAppState extends State<TiktokApp> {
           cursorColor: Color(0xffe9435a),
         ),
         primaryColor: const Color(0xffe9435a),
-        tabBarTheme: const TabBarTheme(
+        tabBarTheme: TabBarTheme(
           indicatorColor: Colors.white,
+          unselectedLabelColor: Colors.grey.shade600,
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
