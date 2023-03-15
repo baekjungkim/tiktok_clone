@@ -49,7 +49,7 @@ class SignUpScreen extends StatelessWidget {
     //     },
     //   ),
     // );
-    context.go(UsernameScreen.routeName);
+    context.push(UsernameScreen.routeName);
     // Navigator.of(context).pushNamed(UsernameScreen.routeName);
   }
 

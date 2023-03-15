@@ -11,9 +11,11 @@ import 'package:tiktok_clone/features/users/widgets/user_follow_block.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final String username;
+  final String tab;
   const UserProfileScreen({
     super.key,
     required this.username,
+    this.tab = 'posts',
   });
 
   @override
@@ -37,6 +39,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       body: SafeArea(
         child: DefaultTabController(
+          initialIndex: widget.tab == 'likes' ? 1 : 0,
           length: 2,
           child: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
