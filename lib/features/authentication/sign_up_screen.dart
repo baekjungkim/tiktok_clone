@@ -7,41 +7,45 @@ import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static String routeName = "/";
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
+    // await Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (context) => const LoginScreen(),
+    //   ),
+    // );
 
-    print('user come back');
+    // print('user come back');
+    final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
+    print(result);
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        transitionDuration: const Duration(seconds: 1),
-        reverseTransitionDuration: const Duration(seconds: 1),
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const UsernameScreen(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          final offsetAnimation =
-              Tween(begin: const Offset(0, -1), end: Offset.zero)
-                  .animate(animation);
-          final opacityAnimation =
-              Tween(begin: 0.5, end: 1.0).animate(animation);
-          return SlideTransition(
-            position: offsetAnimation,
-            child: FadeTransition(
-              opacity: opacityAnimation,
-              child: child,
-            ),
-          );
-        },
-      ),
-    );
+    // Navigator.of(context).push(
+    //   PageRouteBuilder(
+    //     transitionDuration: const Duration(seconds: 1),
+    //     reverseTransitionDuration: const Duration(seconds: 1),
+    //     pageBuilder: (context, animation, secondaryAnimation) =>
+    //         const UsernameScreen(),
+    //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //       final offsetAnimation =
+    //           Tween(begin: const Offset(0, -1), end: Offset.zero)
+    //               .animate(animation);
+    //       final opacityAnimation =
+    //           Tween(begin: 0.5, end: 1.0).animate(animation);
+    //       return SlideTransition(
+    //         position: offsetAnimation,
+    //         child: FadeTransition(
+    //           opacity: opacityAnimation,
+    //           child: child,
+    //         ),
+    //       );
+    //     },
+    //   ),
+    // );
+    Navigator.of(context).pushNamed(UsernameScreen.routeName);
   }
 
   @override
