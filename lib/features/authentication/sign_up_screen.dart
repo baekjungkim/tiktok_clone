@@ -8,7 +8,8 @@ import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeName = "/";
+  static String routeUrl = "/";
+  static String routeName = 'signUp';
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
@@ -49,7 +50,7 @@ class SignUpScreen extends StatelessWidget {
     //     },
     //   ),
     // );
-    context.push(UsernameScreen.routeName);
+    context.pushNamed(UsernameScreen.routeName);
     // Navigator.of(context).pushNamed(UsernameScreen.routeName);
   }
 
