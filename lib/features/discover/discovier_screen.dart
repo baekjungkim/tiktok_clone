@@ -193,7 +193,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                         style: const TextStyle(
                           fontSize: Sizes.size16,
                           fontWeight: FontWeight.w600,
-                          height: 1.2,
+                          height: 1,
                         ),
                       ),
                       Gaps.v5,
