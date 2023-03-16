@@ -8,10 +8,12 @@ import 'package:gallery_saver/gallery_saver.dart';
 
 class VideoPreviewScreen extends StatefulWidget {
   final XFile video;
+  final bool isPicked;
 
   const VideoPreviewScreen({
     super.key,
     required this.video,
+    required this.isPicked,
   });
 
   @override
@@ -64,15 +66,16 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
       appBar: AppBar(
         title: const Text("Video Preview"),
         actions: [
-          IconButton(
-            onPressed: _saveToGallery,
-            icon: Icon(
-              _savedVideo
-                  ? Icons.download_done_rounded
-                  : Icons.download_rounded,
-              size: Sizes.size24,
+          if (!widget.isPicked)
+            IconButton(
+              onPressed: _saveToGallery,
+              icon: Icon(
+                _savedVideo
+                    ? Icons.download_done_rounded
+                    : Icons.download_rounded,
+                size: Sizes.size24,
+              ),
             ),
-          ),
         ],
       ),
       body: _videoPlayerController.value.isInitialized
