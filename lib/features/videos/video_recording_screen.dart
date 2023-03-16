@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -13,15 +14,18 @@ class VideoRecordingScreen extends StatefulWidget {
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
   bool _hasPermission = false;
-  late final CameraController _cameraController;
+
+  bool _isSelfieMode = false;
+
+  late CameraController _cameraController;
 
   Future<void> initCamera() async {
     final cameras = await availableCameras();
     if (cameras.isEmpty) {
       return;
     }
-    _cameraController =
-        CameraController(cameras[0], ResolutionPreset.ultraHigh);
+    _cameraController = CameraController(
+        cameras[_isSelfieMode ? 1 : 0], ResolutionPreset.ultraHigh);
     await _cameraController.initialize();
   }
 
@@ -38,13 +42,41 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
       _hasPermission = true;
       await initCamera();
       setState(() {});
-    } else {}
+    } else {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+          title: const Text("Permission is required"),
+          // content: const Text("Please dont go"),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text("No"),
+              onPressed: () => Navigator.of(context)
+                ..pop()
+                ..pop(),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              child: const Text("Yes"),
+              onPressed: () => openAppSettings(),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
   void initState() {
     super.initState();
     initPermissions();
+  }
+
+  Future<void> _toggleSelfieMode() async {
+    _isSelfieMode = !_isSelfieMode;
+    await initCamera();
+    setState(() {});
   }
 
   @override
@@ -72,6 +104,17 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                 alignment: Alignment.center,
                 children: [
                   CameraPreview(_cameraController),
+                  Positioned(
+                    bottom: Sizes.size10,
+                    right: Sizes.size10,
+                    child: IconButton(
+                      color: Colors.white,
+                      onPressed: _toggleSelfieMode,
+                      icon: const Icon(
+                        Icons.cameraswitch,
+                      ),
+                    ),
+                  )
                 ],
               ),
       ),
