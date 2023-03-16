@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:video_player/video_player.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 
 class VideoPreviewScreen extends StatefulWidget {
   final XFile video;
@@ -18,6 +20,8 @@ class VideoPreviewScreen extends StatefulWidget {
 
 class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
+
+  bool _savedVideo = false;
 
   Future<void> _initVideo() async {
     _videoPlayerController = VideoPlayerController.file(
@@ -43,12 +47,33 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     super.dispose();
   }
 
+  Future<void> _saveToGallery() async {
+    if (_savedVideo) return;
+    await GallerySaver.saveVideo(
+      widget.video.path,
+      albumName: 'Tiktok Clone!',
+    );
+    _savedVideo = true;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text("Video Preview"),
+        actions: [
+          IconButton(
+            onPressed: _saveToGallery,
+            icon: Icon(
+              _savedVideo
+                  ? Icons.download_done_rounded
+                  : Icons.download_rounded,
+              size: Sizes.size24,
+            ),
+          ),
+        ],
       ),
       body: _videoPlayerController.value.isInitialized
           ? VideoPlayer(_videoPlayerController)
