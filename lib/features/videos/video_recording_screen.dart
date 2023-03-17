@@ -177,15 +177,15 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     final video = await _cameraController.stopVideoRecording();
 
     if (!mounted) return;
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => VideoPreviewScreen(
-    //       video: video,
-    //       isPicked: false,
-    //     ),
-    //   ),
-    // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VideoPreviewScreen(
+          video: video,
+          isPicked: false,
+        ),
+      ),
+    );
   }
 
   void _startZoomChange(DragUpdateDetails details) {
