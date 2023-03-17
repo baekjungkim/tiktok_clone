@@ -24,6 +24,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
 
   bool _savedVideo = false;
+  late Future<void> _initializeVideoPlayerFuture;
 
   Future<void> _initVideo() async {
     _videoPlayerController = VideoPlayerController.file(
@@ -40,7 +41,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   @override
   void initState() {
     super.initState();
-    _initVideo();
+    _initializeVideoPlayerFuture = _initVideo();
   }
 
   @override
@@ -78,9 +79,19 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
             ),
         ],
       ),
-      body: _videoPlayerController.value.isInitialized
-          ? VideoPlayer(_videoPlayerController)
-          : null,
+      body: FutureBuilder(
+        future: _initializeVideoPlayerFuture,
+        builder: (context, snapshot) => Center(
+          child: _videoPlayerController.value.isInitialized
+              ? AspectRatio(
+                  aspectRatio: _videoPlayerController.value.aspectRatio,
+                  child: VideoPlayer(
+                    _videoPlayerController,
+                  ),
+                )
+              : const CircularProgressIndicator(),
+        ),
+      ),
     );
   }
 }
