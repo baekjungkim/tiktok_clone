@@ -11,8 +11,6 @@ class EmailScreenArgs {
 }
 
 class EmailScreen extends StatefulWidget {
-  static String routeUrl = 'email';
-  static String routeName = 'email';
   final String username;
   const EmailScreen({
     super.key,
@@ -56,7 +54,8 @@ class _EmailScreenState extends State<EmailScreen> {
   }
 
   void _onSubmit() {
-    if (_email.isEmpty || _isEmailValid() != null) return;
+    if (_email.isEmpty //|| _isEmailValid() != null
+        ) return;
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -98,7 +97,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 autocorrect: false,
                 decoration: InputDecoration(
                   hintText: 'Email',
-                  errorText: _isEmailValid(),
+                  // errorText: _isEmailValid(),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400,
@@ -116,7 +115,8 @@ class _EmailScreenState extends State<EmailScreen> {
               GestureDetector(
                 onTap: _onSubmit,
                 child: FormButton(
-                    disabled: _email.isEmpty || _isEmailValid() != null),
+                    disabled: _email.isEmpty //|| _isEmailValid() != null
+                    ),
               ),
             ],
           ),

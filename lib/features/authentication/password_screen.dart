@@ -51,7 +51,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
   }
 
   void _onSubmit() {
-    if (!_isPasswordLengthValid() || !_isPasswordRegExpValid()) return;
+    // if (!_isPasswordLengthValid() || !_isPasswordRegExpValid()) return;
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -200,9 +200,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
               Gaps.v16,
               GestureDetector(
                 onTap: _onSubmit,
-                child: FormButton(
-                  disabled:
-                      !_isPasswordLengthValid() || !_isPasswordRegExpValid(),
+                child: const FormButton(
+                  disabled: false,
+                  // !_isPasswordLengthValid() || !_isPasswordRegExpValid(),
                 ),
               ),
             ],

@@ -33,7 +33,7 @@ class _TiktokAppState extends State<TiktokApp> {
       routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'Ticktok Clone',
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       theme: ThemeData(
         useMaterial3: true,
         textTheme: Typography.blackHelsinki,
