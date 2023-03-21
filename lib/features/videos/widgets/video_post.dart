@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_action_button.dart';
@@ -134,6 +135,9 @@ class _VideoPostState extends State<VideoPost>
 
   @override
   Widget build(BuildContext context) {
+    final autoMute = VideoConfig.of(context).autoMute;
+    print(autoMute);
+
     return VisibilityDetector(
       key: Key('${widget.index}'),
       onVisibilityChanged: _onVisibilityChanged,
@@ -212,6 +216,20 @@ class _VideoPostState extends State<VideoPost>
             ),
           ),
           Positioned(
+            left: 20,
+            top: 50,
+            child: GestureDetector(
+              onTap: _onVolumnToggle,
+              child: VideoActionButton(
+                icon: _isMuted || autoMute
+                    ? FontAwesomeIcons.volumeXmark
+                    : FontAwesomeIcons.volumeHigh,
+                text: 'Volume',
+                size: Sizes.size20,
+              ),
+            ),
+          ),
+          Positioned(
             bottom: 20,
             right: 10,
             child: Column(
@@ -241,16 +259,6 @@ class _VideoPostState extends State<VideoPost>
                 const VideoActionButton(
                   icon: FontAwesomeIcons.share,
                   text: 'Share',
-                ),
-                Gaps.v24,
-                GestureDetector(
-                  onTap: _onVolumnToggle,
-                  child: VideoActionButton(
-                    icon: _isMuted
-                        ? FontAwesomeIcons.volumeXmark
-                        : FontAwesomeIcons.volumeHigh,
-                    text: 'Volume',
-                  ),
                 ),
               ],
             ),
