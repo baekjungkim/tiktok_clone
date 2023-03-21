@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,6 +25,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   bool _isSelfieMode = false;
   double _minZoomLevel = 1.0;
   double _maxZoomLevel = 1.0;
+
+  late final bool _noCamera = kDebugMode && Platform.isIOS;
+
   final double _currentZoomLevel = 1.0;
   late FlashMode _flashMode;
 
@@ -49,7 +55,14 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   @override
   void initState() {
     super.initState();
-    initPermissions();
+    if (!_noCamera) {
+      initPermissions();
+    } else {
+      setState(() {
+        _hasPermission = true;
+      });
+    }
+
     WidgetsBinding.instance.addObserver(this);
     _progressAnimationController.addListener(() {
       setState(() {});
@@ -101,8 +114,6 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
     _minZoomLevel = await _cameraController.getMinZoomLevel();
     _maxZoomLevel = await _cameraController.getMaxZoomLevel();
-
-    print('$_minZoomLevel, $_maxZoomLevel');
 
     _flashMode = _cameraController.value.flashMode;
 
@@ -220,7 +231,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
       backgroundColor: Colors.black,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: !_hasPermission || !_cameraController.value.isInitialized
+        child: !_hasPermission
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -238,27 +249,29 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
             : Stack(
                 alignment: Alignment.center,
                 children: [
-                  CameraPreview(_cameraController),
-                  Positioned(
-                    top: Sizes.size60,
-                    right: Sizes.size10,
-                    child: Column(
-                      children: [
-                        FlashModeButton(
-                          flashMode: _flashMode,
-                          onPressed: _setFlashMode,
-                        ),
-                        Gaps.v10,
-                        IconButton(
-                          color: Colors.white,
-                          onPressed: _toggleSelfieMode,
-                          icon: const Icon(
-                            Icons.cameraswitch,
+                  if (!_noCamera && _cameraController.value.isInitialized)
+                    CameraPreview(_cameraController),
+                  if (!_noCamera)
+                    Positioned(
+                      top: Sizes.size60,
+                      right: Sizes.size10,
+                      child: Column(
+                        children: [
+                          FlashModeButton(
+                            flashMode: _flashMode,
+                            onPressed: _setFlashMode,
                           ),
-                        ),
-                      ],
+                          Gaps.v10,
+                          IconButton(
+                            color: Colors.white,
+                            onPressed: _toggleSelfieMode,
+                            icon: const Icon(
+                              Icons.cameraswitch,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   Positioned(
                     bottom: Sizes.size20,
                     width: MediaQuery.of(context).size.width,
