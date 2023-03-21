@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tiktok_clone/common/widgets/configs/mode_config/mode_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/router.dart';
 
@@ -27,13 +28,25 @@ class TiktokApp extends StatefulWidget {
 }
 
 class _TiktokAppState extends State<TiktokApp> {
+  String _mode = modeConfig.value;
+
+  @override
+  void initState() {
+    super.initState();
+    modeConfig.addListener(() {
+      setState(() {
+        _mode = modeConfig.value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'Ticktok Clone',
-      themeMode: ThemeMode.light,
+      themeMode: _mode == 'light' ? ThemeMode.light : ThemeMode.dark,
       theme: ThemeData(
         useMaterial3: true,
         textTheme: Typography.blackHelsinki,

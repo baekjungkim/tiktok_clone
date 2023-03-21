@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
+import 'package:tiktok_clone/common/widgets/configs/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_action_button.dart';
@@ -34,7 +34,7 @@ class _VideoPostState extends State<VideoPost>
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
   bool _isPaused = false;
-  bool _isMuted = videoConfig.autoMuted;
+  bool _isMuted = videoConfig.value;
 
   final List<String> tags = [
     "googleearth",
@@ -79,7 +79,7 @@ class _VideoPostState extends State<VideoPost>
 
     videoConfig.addListener(() {
       setState(() {
-        _isMuted = videoConfig.autoMuted;
+        _isMuted = videoConfig.value;
       });
     });
   }
@@ -134,7 +134,7 @@ class _VideoPostState extends State<VideoPost>
     } else {
       _videoPlayerController.setVolume(0);
     }
-    videoConfig.toggleAutoMute();
+    videoConfig.value = !videoConfig.value;
     // setState(() {
     //   _isMuted = !_isMuted;
     // });
