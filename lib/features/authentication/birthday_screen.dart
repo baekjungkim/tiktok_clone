@@ -40,7 +40,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    context.pushReplacementNamed(InterestsScreen.routerName);
+    context.goNamed(InterestsScreen.routerName);
   }
 
   void _onScaffoldTap() {
