@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/configs/mode_config/mode_config.dart';
 import 'package:tiktok_clone/common/widgets/configs/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
@@ -37,27 +38,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           child: ListView(
             children: [
-              ValueListenableBuilder(
-                valueListenable: modeConfig,
-                builder: (context, value, child) => SwitchListTile.adaptive(
-                  value: value == 'dark' ? true : false,
-                  onChanged: (value) {
-                    modeConfig.value = value ? 'dark' : 'light';
-                  },
-                  title: const Text('App Settings mode'),
-                  subtitle: const Text('Light Mode or Dark Mode'),
-                ),
+              SwitchListTile.adaptive(
+                value:
+                    context.watch<ModeConfig>().mode == 'dark' ? true : false,
+                onChanged: (value) => context.read<ModeConfig>().toggleMode(),
+                title: const Text('App Settings mode'),
+                subtitle: const Text('Light Mode or Dark Mode'),
               ),
-              ValueListenableBuilder(
-                valueListenable: videoConfig,
-                builder: (context, value, child) => SwitchListTile.adaptive(
-                  value: value,
-                  onChanged: (value) {
-                    videoConfig.value = !videoConfig.value;
-                  },
-                  title: const Text('Video Mute'),
-                  subtitle: const Text('Videos will be muted by default.'),
-                ),
+              SwitchListTile.adaptive(
+                value: context.watch<VideoConfig>().isMuted,
+                onChanged: (value) =>
+                    context.read<VideoConfig>().toggleIsMuted(),
+                title: const Text('Auto Mute'),
+                subtitle: const Text('Videos muted by default.'),
               ),
               SwitchListTile.adaptive(
                 value: _notifications,

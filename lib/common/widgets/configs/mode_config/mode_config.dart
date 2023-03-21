@@ -1,3 +1,10 @@
 import 'package:flutter/material.dart';
 
-final modeConfig = ValueNotifier('light');
+class ModeConfig extends ChangeNotifier {
+  String mode = 'light';
+
+  void toggleMode() {
+    mode = mode == 'light' ? 'dark' : 'light';
+    notifyListeners();
+  }
+}

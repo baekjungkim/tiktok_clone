@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/configs/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
@@ -34,7 +35,6 @@ class _VideoPostState extends State<VideoPost>
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
   bool _isPaused = false;
-  bool _isMuted = videoConfig.value;
 
   final List<String> tags = [
     "googleearth",
@@ -76,12 +76,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
-
-    videoConfig.addListener(() {
-      setState(() {
-        _isMuted = videoConfig.value;
-      });
-    });
   }
 
   @override
@@ -134,7 +128,8 @@ class _VideoPostState extends State<VideoPost>
     } else {
       _videoPlayerController.setVolume(0);
     }
-    videoConfig.value = !videoConfig.value;
+    context.read<VideoConfig>().toggleIsMuted();
+    // videoConfig.value = !videoConfig.value;
     // setState(() {
     //   _isMuted = !_isMuted;
     // });
@@ -225,7 +220,7 @@ class _VideoPostState extends State<VideoPost>
             child: GestureDetector(
               onTap: _onVolumnToggle,
               child: VideoActionButton(
-                icon: _isMuted
+                icon: context.watch<VideoConfig>().isMuted
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 text: 'Volume',
