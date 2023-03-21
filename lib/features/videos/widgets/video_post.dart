@@ -34,7 +34,7 @@ class _VideoPostState extends State<VideoPost>
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
   bool _isPaused = false;
-  bool _isMuted = true;
+  // bool _isMuted = true;
 
   final List<String> tags = [
     "googleearth",
@@ -128,16 +128,14 @@ class _VideoPostState extends State<VideoPost>
     } else {
       _videoPlayerController.setVolume(0);
     }
-    setState(() {
-      _isMuted = !_isMuted;
-    });
+    VideoConfigData.of(context).toggleMuted();
+    // setState(() {
+    //   _isMuted = !_isMuted;
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    final autoMute = VideoConfig.of(context).autoMute;
-    print(autoMute);
-
     return VisibilityDetector(
       key: Key('${widget.index}'),
       onVisibilityChanged: _onVisibilityChanged,
@@ -221,8 +219,8 @@ class _VideoPostState extends State<VideoPost>
             child: GestureDetector(
               onTap: _onVolumnToggle,
               child: VideoActionButton(
-                icon: _isMuted || autoMute
-                    ? FontAwesomeIcons.volumeXmark
+                icon: VideoConfigData.of(context).autoMute
+                    ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 text: 'Volume',
                 size: Sizes.size20,
