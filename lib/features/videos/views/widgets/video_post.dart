@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/configs/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/videos/widgets/video_action_button.dart';
-import 'package:tiktok_clone/features/videos/widgets/video_bgm_info.dart';
-import 'package:tiktok_clone/features/videos/widgets/video_tag_info.dart';
-import 'package:tiktok_clone/features/videos/widgets/vidoe_comments.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/video_action_button.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/video_bgm_info.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/video_tag_info.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/vidoe_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
