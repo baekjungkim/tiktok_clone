@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/repositories/mode_config_repository.dart';
+import 'package:tiktok_clone/features/settings/view_models/mode_config_view_model.dart';
 import 'package:tiktok_clone/features/videos/repositories/playback_config_repository.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_view_model.dart';
 import 'package:tiktok_clone/router.dart';
@@ -27,27 +28,32 @@ void main() async {
         playbackConfigProvider.overrideWith(
           () => PlaybackConfigViewModel(playbackRepository),
         ),
+        modeConfigProvider.overrideWith(
+          () => ModeConfigViewModel(modeRepository),
+        ),
       ],
       child: const TiktokApp(),
     ),
   );
 }
 
-class TiktokApp extends StatefulWidget {
+class TiktokApp extends ConsumerStatefulWidget {
   const TiktokApp({super.key});
 
   @override
-  State<TiktokApp> createState() => _TiktokAppState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _TiktokAppState();
 }
 
-class _TiktokAppState extends State<TiktokApp> {
+class _TiktokAppState extends ConsumerState<TiktokApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'Ticktok Clone',
-      themeMode: false // context.watch<ModeConfigViewModel>().isDark
+      themeMode: ref
+              .watch(modeConfigProvider)
+              .isDark // context.watch<ModeConfigViewModel>().isDark
           ? ThemeMode.dark
           : ThemeMode.light,
       theme: ThemeData(

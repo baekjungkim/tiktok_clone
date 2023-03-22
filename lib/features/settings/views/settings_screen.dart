@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
+import 'package:tiktok_clone/features/settings/view_models/mode_config_view_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_view_model.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -24,8 +25,9 @@ class SettingsScreen extends ConsumerWidget {
           child: ListView(
             children: [
               SwitchListTile.adaptive(
-                value: false,
-                onChanged: (value) => {},
+                value: ref.watch(modeConfigProvider).isDark,
+                onChanged: (value) =>
+                    ref.read(modeConfigProvider.notifier).setMode(value),
                 title: const Text('Dark mode'),
                 subtitle: const Text('App will be dark mode'),
               ),
