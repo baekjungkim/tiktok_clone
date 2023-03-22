@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
+import 'package:tiktok_clone/features/settings/view_models/mode_config_view_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_view_model.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -37,6 +38,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           child: ListView(
             children: [
+              SwitchListTile.adaptive(
+                value: context.watch<ModeConfigViewModel>().isDark,
+                onChanged: (value) =>
+                    context.read<ModeConfigViewModel>().setMode(value),
+                title: const Text('Dark mode'),
+                subtitle: const Text('App will be dark mode'),
+              ),
               SwitchListTile.adaptive(
                 value: context.watch<PlaybackConfigViewModel>().muted,
                 onChanged: (value) =>
