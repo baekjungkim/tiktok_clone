@@ -128,7 +128,7 @@ class _VideoPostState extends State<VideoPost>
     } else {
       _videoPlayerController.setVolume(0);
     }
-    context.read<VideoConfig>().toggleIsMuted();
+    // context.read<VideoConfig>().toggleIsMuted();
     // videoConfig.value = !videoConfig.value;
     // setState(() {
     //   _isMuted = !_isMuted;
@@ -219,8 +219,8 @@ class _VideoPostState extends State<VideoPost>
             top: 50,
             child: GestureDetector(
               onTap: _onVolumnToggle,
-              child: VideoActionButton(
-                icon: context.watch<VideoConfig>().isMuted
+              child: const VideoActionButton(
+                icon: false
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 text: 'Volume',

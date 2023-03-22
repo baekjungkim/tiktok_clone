@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok_clone/common/widgets/configs/mode_config/mode_config.dart';
-import 'package:tiktok_clone/common/widgets/configs/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/repositories/playback_config_repository.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_view_model.dart';
 import 'package:tiktok_clone/router.dart';
 
 void main() async {
@@ -15,11 +17,18 @@ void main() async {
     ],
   );
 
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle.dark,
-  );
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   SystemUiOverlayStyle.dark,
+  // );
 
-  runApp(const TiktokApp());
+  final preferences = await SharedPreferences.getInstance();
+  final repository = PlaybackConfigRepository(preferences);
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => PlaybackConfigViewModel(repository),
+    ),
+  ], child: const TiktokApp()));
 }
 
 class TiktokApp extends StatefulWidget {
@@ -32,108 +41,99 @@ class TiktokApp extends StatefulWidget {
 class _TiktokAppState extends State<TiktokApp> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => ModeConfig(),
+    return AnimatedBuilder(
+      animation: ModeConfig(),
+      builder: (context, child) => MaterialApp.router(
+        routerConfig: router,
+        debugShowCheckedModeBanner: false,
+        title: 'Ticktok Clone',
+        themeMode: ThemeMode.light,
+        // context.watch<ModeConfig>().mode == 'light'
+        //     ? ThemeMode.light
+        //     : ThemeMode.dark,
+        theme: ThemeData(
+          useMaterial3: true,
+          textTheme: Typography.blackHelsinki,
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: Colors.white,
+          bottomAppBarTheme: BottomAppBarTheme(
+            color: Colors.grey.shade50,
+          ),
+          primaryColor: const Color(0xffe9435a),
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: Color(0xffe9435a),
+          ),
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          appBarTheme: const AppBarTheme(
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: Sizes.size16 + Sizes.size2,
+              fontWeight: FontWeight.w600,
+            ),
+            surfaceTintColor: Colors.white,
+          ),
+          tabBarTheme: TabBarTheme(
+            unselectedLabelColor: Colors.grey.shade500,
+            labelColor: Colors.black,
+            indicatorColor: Colors.black,
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: Colors.grey.shade200,
+            iconColor: Colors.grey.shade600,
+            prefixIconColor: Colors.grey.shade600,
+            suffixIconColor: Colors.grey.shade600,
+          ),
+          listTileTheme: const ListTileThemeData(
+            iconColor: Colors.black,
+          ),
         ),
-        ChangeNotifierProvider(
-          create: (context) => VideoConfig(),
-        ),
-      ],
-      child: AnimatedBuilder(
-        animation: ModeConfig(),
-        builder: (context, child) => MaterialApp.router(
-          routerConfig: router,
-          debugShowCheckedModeBanner: false,
-          title: 'Ticktok Clone',
-          themeMode: context.watch<ModeConfig>().mode == 'light'
-              ? ThemeMode.light
-              : ThemeMode.dark,
-          theme: ThemeData(
-            useMaterial3: true,
-            textTheme: Typography.blackHelsinki,
-            brightness: Brightness.light,
-            scaffoldBackgroundColor: Colors.white,
-            bottomAppBarTheme: BottomAppBarTheme(
-              color: Colors.grey.shade50,
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          textTheme: Typography.whiteHelsinki,
+          brightness: Brightness.dark,
+          scaffoldBackgroundColor: Colors.black,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.grey.shade900,
+            surfaceTintColor: Colors.grey.shade900,
+            titleTextStyle: const TextStyle(
+              color: Colors.white,
+              fontSize: Sizes.size16 + Sizes.size2,
+              fontWeight: FontWeight.w600,
             ),
-            primaryColor: const Color(0xffe9435a),
-            textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: Color(0xffe9435a),
+            actionsIconTheme: IconThemeData(
+              color: Colors.grey.shade100,
             ),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            appBarTheme: const AppBarTheme(
-              foregroundColor: Colors.black,
-              backgroundColor: Colors.white,
-              elevation: 0,
-              centerTitle: true,
-              titleTextStyle: TextStyle(
-                color: Colors.black,
-                fontSize: Sizes.size16 + Sizes.size2,
-                fontWeight: FontWeight.w600,
-              ),
-              surfaceTintColor: Colors.white,
-            ),
-            tabBarTheme: TabBarTheme(
-              unselectedLabelColor: Colors.grey.shade500,
-              labelColor: Colors.black,
-              indicatorColor: Colors.black,
-            ),
-            inputDecorationTheme: InputDecorationTheme(
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              iconColor: Colors.grey.shade600,
-              prefixIconColor: Colors.grey.shade600,
-              suffixIconColor: Colors.grey.shade600,
-            ),
-            listTileTheme: const ListTileThemeData(
-              iconColor: Colors.black,
+            iconTheme: IconThemeData(
+              color: Colors.grey.shade100,
             ),
           ),
-          darkTheme: ThemeData(
-            useMaterial3: true,
-            textTheme: Typography.whiteHelsinki,
-            brightness: Brightness.dark,
-            scaffoldBackgroundColor: Colors.black,
-            appBarTheme: AppBarTheme(
-              backgroundColor: Colors.grey.shade900,
-              surfaceTintColor: Colors.grey.shade900,
-              titleTextStyle: const TextStyle(
-                color: Colors.white,
-                fontSize: Sizes.size16 + Sizes.size2,
-                fontWeight: FontWeight.w600,
-              ),
-              actionsIconTheme: IconThemeData(
-                color: Colors.grey.shade100,
-              ),
-              iconTheme: IconThemeData(
-                color: Colors.grey.shade100,
-              ),
+          bottomAppBarTheme: BottomAppBarTheme(
+            color: Colors.grey.shade800,
+          ),
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: Color(0xffe9435a),
+          ),
+          primaryColor: const Color(0xffe9435a),
+          tabBarTheme: TabBarTheme(
+            indicatorColor: Colors.white,
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.grey.shade700,
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: Colors.grey.shade800,
+            hintStyle: const TextStyle(
+              color: Colors.white,
             ),
-            bottomAppBarTheme: BottomAppBarTheme(
-              color: Colors.grey.shade800,
-            ),
-            textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: Color(0xffe9435a),
-            ),
-            primaryColor: const Color(0xffe9435a),
-            tabBarTheme: TabBarTheme(
-              indicatorColor: Colors.white,
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.grey.shade700,
-            ),
-            inputDecorationTheme: InputDecorationTheme(
-              filled: true,
-              fillColor: Colors.grey.shade800,
-              hintStyle: const TextStyle(
-                color: Colors.white,
-              ),
-              iconColor: Colors.grey.shade500,
-              prefixIconColor: Colors.grey.shade500,
-              suffixIconColor: Colors.grey.shade500,
-            ),
+            iconColor: Colors.grey.shade500,
+            prefixIconColor: Colors.grey.shade500,
+            suffixIconColor: Colors.grey.shade500,
           ),
         ),
       ),
