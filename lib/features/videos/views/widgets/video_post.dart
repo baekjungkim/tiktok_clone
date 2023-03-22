@@ -77,10 +77,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
-
-    context
-        .read<PlaybackConfigViewModel>()
-        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -91,13 +87,13 @@ class _VideoPostState extends State<VideoPost>
 
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
-    final muted = context.read<PlaybackConfigViewModel>().muted;
-    if (muted) {
-      _videoPlayerController.setVolume(0);
-    } else {
-      _videoPlayerController.setVolume(1);
-    }
-    _isMuted = muted;
+    // final muted = context.read<PlaybackConfigViewModel>().muted;
+    // if (muted) {
+    //   _videoPlayerController.setVolume(0);
+    // } else {
+    //   _videoPlayerController.setVolume(1);
+    // }
+    // _isMuted = muted;
     setState(() {});
   }
 
@@ -106,10 +102,10 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
-      if (autoplay) {
-        _videoPlayerController.play();
-      }
+      // final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+      // if (autoplay) {
+      _videoPlayerController.play();
+      // }
     }
     if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
       _onTogglePause();

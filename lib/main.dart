@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/repositories/mode_config_repository.dart';
-import 'package:tiktok_clone/features/settings/view_models/mode_config_view_model.dart';
 import 'package:tiktok_clone/features/videos/repositories/playback_config_repository.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_view_model.dart';
 import 'package:tiktok_clone/router.dart';
@@ -18,22 +17,20 @@ void main() async {
     ],
   );
 
-  // SystemChrome.setSystemUIOverlayStyle(
-  //   SystemUiOverlayStyle.dark,
-  // );
-
   final preferences = await SharedPreferences.getInstance();
   final playbackRepository = PlaybackConfigRepository(preferences);
   final modeRepository = ModeConfigRepository(preferences);
 
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(
-      create: (context) => PlaybackConfigViewModel(playbackRepository),
+  runApp(
+    ProviderScope(
+      overrides: [
+        playbackConfigProvider.overrideWith(
+          () => PlaybackConfigViewModel(playbackRepository),
+        ),
+      ],
+      child: const TiktokApp(),
     ),
-    ChangeNotifierProvider(
-      create: (context) => ModeConfigViewModel(modeRepository),
-    ),
-  ], child: const TiktokApp()));
+  );
 }
 
 class TiktokApp extends StatefulWidget {
@@ -50,7 +47,7 @@ class _TiktokAppState extends State<TiktokApp> {
       routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'Ticktok Clone',
-      themeMode: context.watch<ModeConfigViewModel>().isDark
+      themeMode: false // context.watch<ModeConfigViewModel>().isDark
           ? ThemeMode.dark
           : ThemeMode.light,
       theme: ThemeData(
