@@ -19,7 +19,7 @@ final routerProvider = Provider((ref) {
       if (isLoggedIn) return null;
       if (state.subloc != SignUpScreen.routeUrl &&
           state.subloc != LoginScreen.routeUrl) {
-        return LoginScreen.routeUrl;
+        return SignUpScreen.routeUrl;
       }
       return null;
     },

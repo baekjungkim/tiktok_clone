@@ -58,7 +58,6 @@ class TiktokApp extends ConsumerWidget {
           ? ThemeMode.dark
           : ThemeMode.light,
       theme: ThemeData(
-        useMaterial3: true,
         textTheme: Typography.blackHelsinki,
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
