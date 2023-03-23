@@ -43,18 +43,13 @@ void main() async {
   );
 }
 
-class TiktokApp extends ConsumerStatefulWidget {
+class TiktokApp extends ConsumerWidget {
   const TiktokApp({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _TiktokAppState();
-}
-
-class _TiktokAppState extends ConsumerState<TiktokApp> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
       debugShowCheckedModeBanner: false,
       title: 'Ticktok Clone',
       themeMode: ref
