@@ -11,7 +11,7 @@ class UploadVideoViewModel extends AsyncNotifier<VideoModel> {
       const Duration(seconds: 2),
     );
     final newVideo = VideoModel(title: "${DateTime.now()}");
-    ref.read(timelineProvider.notifier).addVideo(newVideo);
+    ref.read(timelineProvider.notifier).addTimeline(newVideo);
     state = AsyncValue.data(newVideo);
   }
 

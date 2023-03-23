@@ -8,8 +8,9 @@ class TimelineViewModel extends AsyncNotifier<List<VideoModel>> {
     VideoModel(title: 'First Video'),
   ];
 
-  void addVideo(VideoModel video) {
-    _list = [..._list, video];
+  void addTimeline(VideoModel newVideo) {
+    _list = [newVideo, ..._list];
+    state = AsyncValue.data(_list);
   }
 
   @override
