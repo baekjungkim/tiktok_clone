@@ -7,6 +7,8 @@ class AuthenticationRepository {
   bool get isLoggedIn => user != null;
   User? get user => _firebaseAuth.currentUser;
 
+  Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
+
   Future<UserCredential> signUp({
     required String email,
     required String password,
@@ -16,6 +18,15 @@ class AuthenticationRepository {
       password: password,
     );
   }
+
+  Future<void> signOut() async {
+    _firebaseAuth.signOut();
+  }
 }
 
 final authRepository = Provider((ref) => AuthenticationRepository());
+
+final authState = StreamProvider((ref) {
+  final authRepo = ref.read(authRepository);
+  return authRepo.authStateChanges();
+});
