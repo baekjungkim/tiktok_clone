@@ -48,7 +48,7 @@ class Avatar extends ConsumerWidget {
               radius: 50,
               foregroundImage: hasAvatar
                   ? NetworkImage(
-                      'https://firebasestorage.googleapis.com/v0/b/tiktok-clone-vgandam.appspot.com/o/avatars%2F$uid?alt=media',
+                      'https://firebasestorage.googleapis.com/v0/b/tiktok-clone-vgandam.appspot.com/o/avatars%2F$uid?alt=media&datetime=${DateTime.now().toString()}',
                     )
                   : null,
               child: Text(name),
