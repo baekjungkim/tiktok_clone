@@ -10,6 +10,7 @@ import 'package:tiktok_clone/features/settings/views/settings_screen.dart';
 import 'package:tiktok_clone/features/users/view_models/users_view_model.dart';
 import 'package:tiktok_clone/features/users/widgets/persistent_tab_bar.dart';
 import 'package:tiktok_clone/features/users/widgets/avatar.dart';
+import 'package:tiktok_clone/features/users/widgets/update_profile.dart';
 import 'package:tiktok_clone/features/users/widgets/user_follow_block.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
@@ -31,6 +32,15 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
       MaterialPageRoute(
         builder: (context) => const SettingsScreen(),
       ),
+    );
+  }
+
+  void _onProfileUpdatePressed() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const UpdateProfile(),
     );
   }
 
@@ -60,6 +70,13 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                         SliverAppBar(
                           title: Text(data.name),
                           actions: [
+                            IconButton(
+                              onPressed: _onProfileUpdatePressed,
+                              icon: const FaIcon(
+                                FontAwesomeIcons.screwdriverWrench,
+                                size: Sizes.size20,
+                              ),
+                            ),
                             IconButton(
                               onPressed: _onGearPressed,
                               icon: const FaIcon(
@@ -233,27 +250,27 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                                 ),
                               ),
                               Gaps.v14,
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
                                   horizontal: Sizes.size32,
                                 ),
                                 child: Text(
-                                  'All highlights and where to watch live matches on FIFA+ I wonder how it would looks',
+                                  ref.watch(usersProvider).value?.bio ?? '',
                                   textAlign: TextAlign.center,
                                 ),
                               ),
                               Gaps.v14,
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  FaIcon(
+                                children: [
+                                  const FaIcon(
                                     FontAwesomeIcons.link,
                                     size: Sizes.size12,
                                   ),
                                   Gaps.h4,
                                   Text(
-                                    "https://nomadcorder.co",
-                                    style: TextStyle(
+                                    ref.watch(usersProvider).value?.link ?? '',
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
