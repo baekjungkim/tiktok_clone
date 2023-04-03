@@ -6,6 +6,7 @@ class UserProfileModel {
   final String name;
   final String bio;
   final String link;
+  final String birthday;
 
   UserProfileModel({
     required this.uid,
@@ -13,6 +14,7 @@ class UserProfileModel {
     required this.name,
     required this.bio,
     required this.link,
+    required this.birthday,
   });
 
   UserProfileModel.empty()
@@ -20,7 +22,8 @@ class UserProfileModel {
         email = "",
         name = "",
         bio = "",
-        link = "";
+        link = "",
+        birthday = "";
 
   Map<String, dynamic> toMap() {
     return {
@@ -29,6 +32,7 @@ class UserProfileModel {
       'name': name,
       'bio': bio,
       'link': link,
+      'birthday': birthday,
     };
   }
 
@@ -41,6 +45,7 @@ class UserProfileModel {
       name: map['name'] ?? '',
       bio: map['bio'] ?? '',
       link: map['link'] ?? '',
+      birthday: map['birthday'] ?? '',
     );
   }
 

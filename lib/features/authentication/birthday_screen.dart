@@ -40,6 +40,11 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   Future<void> _onNextTap() async {
+    final state = ref.read(signupForm.notifier).state;
+    ref.read(signupForm.notifier).state = {
+      "birthday": _birthdayController.text,
+      ...state
+    };
     await ref.read(signUpProvider.notifier).signUp(context);
     // context.goNamed(InterestsScreen.routerName);
   }
