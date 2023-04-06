@@ -87,13 +87,13 @@ class TiktokApp extends ConsumerWidget {
           labelColor: Colors.black,
           indicatorColor: Colors.black,
         ),
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: Colors.grey.shade200,
-          iconColor: Colors.grey.shade600,
-          prefixIconColor: Colors.grey.shade600,
-          suffixIconColor: Colors.grey.shade600,
-        ),
+        // inputDecorationTheme: InputDecorationTheme(
+        //   filled: true,
+        //   fillColor: Colors.grey.shade200,
+        //   iconColor: Colors.grey.shade600,
+        //   prefixIconColor: Colors.grey.shade600,
+        //   suffixIconColor: Colors.grey.shade600,
+        // ),
         listTileTheme: const ListTileThemeData(
           iconColor: Colors.black,
         ),
