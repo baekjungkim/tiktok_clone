@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAWUkN-NCasDes7r-IJW-edP75ZGGuCaTA',
-    appId: '1:379512078837:android:742d54e85d2f156a24a0bc',
+    appId: '1:379512078837:android:6470f843058ba53d24a0bc',
     messagingSenderId: '379512078837',
     projectId: 'tiktok-clone-vgandam',
     storageBucket: 'tiktok-clone-vgandam.appspot.com',
@@ -65,11 +65,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAWHG28IKsRWxrrz38LhAAjGvePTEA_G4g',
-    appId: '1:379512078837:ios:ff4f126701ce395d24a0bc',
+    appId: '1:379512078837:ios:ad76d63864c541a924a0bc',
     messagingSenderId: '379512078837',
     projectId: 'tiktok-clone-vgandam',
     storageBucket: 'tiktok-clone-vgandam.appspot.com',
-    iosClientId: '379512078837-16neslu9uab7dcsdenn8aq7unibnq6ls.apps.googleusercontent.com',
-    iosBundleId: 'com.example.tiktokClone',
+    iosClientId: '379512078837-ijo0qq47luavvt3a54vau1nrpm0ieagq.apps.googleusercontent.com',
+    iosBundleId: 'com.halfbaek.tiktokClone',
   );
 }

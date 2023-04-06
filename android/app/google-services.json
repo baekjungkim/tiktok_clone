@@ -31,10 +31,46 @@
               "client_type": 3
             },
             {
-              "client_id": "379512078837-6vqui7ikbkqj6v1avg7chstbe9qnabqf.apps.googleusercontent.com",
+              "client_id": "379512078837-16neslu9uab7dcsdenn8aq7unibnq6ls.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "co.halfbaek.tiktok"
+                "bundle_id": "com.example.tiktokClone"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379512078837:android:6470f843058ba53d24a0bc",
+        "android_client_info": {
+          "package_name": "com.halfbaek.tiktok_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "379512078837-039i2d1pavggkvhses4jj1sa0b037ouo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWUkN-NCasDes7r-IJW-edP75ZGGuCaTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379512078837-039i2d1pavggkvhses4jj1sa0b037ouo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "379512078837-16neslu9uab7dcsdenn8aq7unibnq6ls.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tiktokClone"
               }
             }
           ]
