@@ -64,22 +64,24 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
               ),
             ),
           ),
-          data: (videos) => RefreshIndicator(
-            onRefresh: _onRefresh,
-            displacement: 80,
-            edgeOffset: 20,
-            backgroundColor: Theme.of(context).primaryColor,
-            child: PageView.builder(
-              controller: _pageController,
-              scrollDirection: Axis.vertical,
-              onPageChanged: _onPageChanged,
-              itemCount: videos.length,
-              itemBuilder: (context, index) => VideoPost(
-                onVideoFinished: _onVideoFinished,
-                index: index,
+          data: (videos) {
+            return RefreshIndicator(
+              onRefresh: _onRefresh,
+              displacement: 80,
+              edgeOffset: 20,
+              backgroundColor: Theme.of(context).primaryColor,
+              child: PageView.builder(
+                controller: _pageController,
+                scrollDirection: Axis.vertical,
+                onPageChanged: _onPageChanged,
+                itemCount: videos.length,
+                itemBuilder: (context, index) => VideoPost(
+                  onVideoFinished: _onVideoFinished,
+                  index: index,
+                ),
               ),
-            ),
-          ),
+            );
+          },
         );
   }
 }

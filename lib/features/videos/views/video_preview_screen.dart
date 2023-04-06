@@ -41,7 +41,7 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
     );
 
     await _videoPlayerController.initialize();
-    // await _videoPlayerController.setLooping(true);
+    await _videoPlayerController.setLooping(true);
     await _videoPlayerController.play();
   }
 
@@ -80,6 +80,7 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
       return;
     }
     ref.read(uploadVideoProvider.notifier).uploadVideo(
+          context,
           video: File(widget.video.path),
           title: _titleContoller.text,
           description: _descriptionContoller.text,

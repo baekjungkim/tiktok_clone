@@ -8,17 +8,19 @@ class VideoModel {
   final int likes;
   final int comments;
   final String creatorUid;
+  final String creator;
   final int createdAt;
 
   VideoModel({
-    this.title = "",
-    this.description = "",
-    this.fileUrl = "",
-    this.thumbnailUrl = "",
-    this.likes = 0,
-    this.comments = 0,
-    this.creatorUid = "",
-    this.createdAt = 0,
+    required this.title,
+    required this.description,
+    required this.fileUrl,
+    required this.thumbnailUrl,
+    required this.likes,
+    required this.comments,
+    required this.creatorUid,
+    required this.creator,
+    required this.createdAt,
   });
 
   VideoModel copyWith({
@@ -29,6 +31,7 @@ class VideoModel {
     int? likes,
     int? comments,
     String? creatorUid,
+    String? creator,
     int? createdAt,
   }) {
     return VideoModel(
@@ -39,6 +42,7 @@ class VideoModel {
       likes: likes ?? this.likes,
       comments: comments ?? this.comments,
       creatorUid: creatorUid ?? this.creatorUid,
+      creator: creator ?? this.creator,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -52,6 +56,7 @@ class VideoModel {
       'likes': likes,
       'comments': comments,
       'creatorUid': creatorUid,
+      'creator': creator,
       'createdAt': createdAt,
     };
   }
@@ -65,6 +70,7 @@ class VideoModel {
       likes: map['likes']?.toInt() ?? 0,
       comments: map['comments']?.toInt() ?? 0,
       creatorUid: map['creatorUid'] ?? '',
+      creator: map['creator'] ?? '',
       createdAt: map['createdAt']?.toInt() ?? 0,
     );
   }
