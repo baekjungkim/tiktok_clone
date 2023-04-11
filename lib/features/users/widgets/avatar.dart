@@ -9,12 +9,14 @@ class Avatar extends ConsumerWidget {
   final String uid;
   final String name;
   final bool hasAvatar;
+  final double size;
 
   const Avatar({
     super.key,
     required this.uid,
     required this.name,
     required this.hasAvatar,
+    this.size = 50,
   });
 
   Future<void> _onAvatarTap(WidgetRef ref) async {
@@ -36,8 +38,8 @@ class Avatar extends ConsumerWidget {
       onTap: isLoading ? null : () => _onAvatarTap(ref),
       child: isLoading
           ? Container(
-              width: 50,
-              height: 50,
+              width: size,
+              height: size,
               alignment: Alignment.center,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
@@ -45,7 +47,7 @@ class Avatar extends ConsumerWidget {
               child: const CircularProgressIndicator.adaptive(),
             )
           : CircleAvatar(
-              radius: 50,
+              radius: size,
               foregroundImage: hasAvatar
                   ? NetworkImage(
                       'https://firebasestorage.googleapis.com/v0/b/tiktok-clone-vgandam.appspot.com/o/avatars%2F$uid?alt=media&datetime=${DateTime.now().toString()}',
