@@ -46,7 +46,8 @@ class UploadVideoViewModel extends AsyncNotifier<void> {
           await _repository.saveVideo(videoModel);
           await ref.read(timelineProvider.notifier).addTimeline(videoModel);
           if (context.mounted) {
-            context.pushReplacement("/home");
+            context.pop();
+            context.pop();
           }
         }
       },
