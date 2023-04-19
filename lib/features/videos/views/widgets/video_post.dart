@@ -59,7 +59,7 @@ class VideoPostState extends ConsumerState<VideoPost>
   }
 
   void _onListTap() {
-    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
+    ref.read(videoPostProvider(widget.videoData.id).notifier).toggleVideoLike();
   }
 
   void _initVideoPlayer() async {
@@ -160,7 +160,6 @@ class VideoPostState extends ConsumerState<VideoPost>
 
   @override
   Widget build(BuildContext context) {
-    setState(() {});
     return VisibilityDetector(
       key: Key('${widget.index}'),
       onVisibilityChanged: _onVisibilityChanged,

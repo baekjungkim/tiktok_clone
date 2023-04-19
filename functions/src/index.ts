@@ -36,3 +36,31 @@ export const onVideoCreated = functions
       .doc(snapshot.id)
       .set({ thumbnailUrl: file.publicUrl(), videoId: snapshot.id });
   });
+
+export const onLikeCreated = functions
+  .region('asia-northeast3')
+  .firestore.document('likes/{likeId}')
+  .onCreate(async (snapshot, context) => {
+    const db = admin.firestore();
+    const [videoId, _] = snapshot.id.split('000');
+    await db
+      .collection('videos')
+      .doc(videoId)
+      .update({
+        likes: admin.firestore.FieldValue.increment(1),
+      });
+  });
+
+export const onLikeRemoved = functions
+  .region('asia-northeast3')
+  .firestore.document('likes/{likeId}')
+  .onDelete(async (snapshot, context) => {
+    const db = admin.firestore();
+    const [videoId, _] = snapshot.id.split('000');
+    await db
+      .collection('videos')
+      .doc(videoId)
+      .update({
+        likes: admin.firestore.FieldValue.increment(-1),
+      });
+  });
