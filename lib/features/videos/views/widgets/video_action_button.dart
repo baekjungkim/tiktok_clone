@@ -7,15 +7,18 @@ class VideoActionButton extends StatelessWidget {
   final IconData _icon;
   final String _text;
   final double _size;
+  final Color _iconColor;
 
   const VideoActionButton({
     super.key,
     required icon,
     required text,
     size = Sizes.size40,
+    iconColor = Colors.white,
   })  : _icon = icon,
         _text = text,
-        _size = size;
+        _size = size,
+        _iconColor = iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class VideoActionButton extends StatelessWidget {
       children: [
         FaIcon(
           _icon,
-          color: Colors.white,
+          color: _iconColor,
           size: _size,
         ),
         Gaps.v5,

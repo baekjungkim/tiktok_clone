@@ -6,9 +6,9 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_view_model.dart';
-import 'package:tiktok_clone/features/videos/view_models/video_post_view_model.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_action_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_bgm_info.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/video_like.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_tag_info.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/vidoe_comments.dart';
 import 'package:video_player/video_player.dart';
@@ -56,10 +56,6 @@ class VideoPostState extends ConsumerState<VideoPost>
         _videoPlayerController.value.position) {
       widget.onVideoFinished();
     }
-  }
-
-  void _onListTap() {
-    ref.read(videoPostProvider(widget.videoData.id).notifier).toggleVideoLike();
   }
 
   void _initVideoPlayer() async {
@@ -267,13 +263,9 @@ class VideoPostState extends ConsumerState<VideoPost>
                   child: Text(widget.videoData.creator),
                 ),
                 Gaps.v24,
-                GestureDetector(
-                  onTap: _onListTap,
-                  child: VideoActionButton(
-                    icon: FontAwesomeIcons.solidHeart,
-                    text: '${widget.videoData.likes}',
-                  ),
-                ),
+                VideoLike(
+                    videoId: widget.videoData.id,
+                    likes: widget.videoData.likes),
                 Gaps.v24,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),

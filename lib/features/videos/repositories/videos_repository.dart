@@ -36,6 +36,12 @@ class VideosRepository {
     return query.startAfter([lastItemCreatedAt]).get();
   }
 
+  Future<bool> isVideoLike(String videoId, String userId) async {
+    final like =
+        await _db.collection("likes").doc("${videoId}000$userId").get();
+    return like.exists;
+  }
+
   Future<void> toggleVideoLike(String videoId, String userId) async {
     final query = _db.collection("likes").doc("${videoId}000$userId");
     final like = await query.get();
