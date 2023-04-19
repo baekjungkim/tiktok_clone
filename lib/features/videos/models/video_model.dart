@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class VideoModel {
+  final String id;
   final String title;
   final String description;
   final String fileUrl;
@@ -12,6 +14,7 @@ class VideoModel {
   final int createdAt;
 
   VideoModel({
+    required this.id,
     required this.title,
     required this.description,
     required this.fileUrl,
@@ -24,6 +27,7 @@ class VideoModel {
   });
 
   VideoModel copyWith({
+    String? id,
     String? title,
     String? description,
     String? fileUrl,
@@ -35,6 +39,7 @@ class VideoModel {
     int? createdAt,
   }) {
     return VideoModel(
+      id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
       fileUrl: fileUrl ?? this.fileUrl,
@@ -48,7 +53,8 @@ class VideoModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
+      'id': id,
       'title': title,
       'description': description,
       'fileUrl': fileUrl,
@@ -61,22 +67,23 @@ class VideoModel {
     };
   }
 
-  factory VideoModel.fromMap(Map<String, dynamic> map) {
+  factory VideoModel.fromMap({required Map<String, dynamic> map, String? videoId}) {
     return VideoModel(
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      fileUrl: map['fileUrl'] ?? '',
-      thumbnailUrl: map['thumbnailUrl'] ?? '',
-      likes: map['likes']?.toInt() ?? 0,
-      comments: map['comments']?.toInt() ?? 0,
-      creatorUid: map['creatorUid'] ?? '',
-      creator: map['creator'] ?? '',
-      createdAt: map['createdAt']?.toInt() ?? 0,
+      id: videoId ?? "",
+      title: map['title'] as String,
+      description: map['description'] as String,
+      fileUrl: map['fileUrl'] as String,
+      thumbnailUrl: map['thumbnailUrl'] as String,
+      likes: map['likes'] as int,
+      comments: map['comments'] as int,
+      creatorUid: map['creatorUid'] as String,
+      creator: map['creator'] as String,
+      createdAt: map['createdAt'] as int,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory VideoModel.fromJson(String source) =>
-      VideoModel.fromMap(json.decode(source));
+  factory VideoModel.fromJson({required String source, String? videoId}) =>
+      VideoModel.fromMap(map: json.decode(source) as Map<String, dynamic>, videoId: videoId);
 }
